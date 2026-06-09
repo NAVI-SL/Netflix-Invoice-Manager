@@ -1,0 +1,395 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>WhatsApp Invoice Preview &amp; Actions - Netflix Invoice Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Print styles for PDF generation */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            header, footer, .action-panel, .glow-bg, .no-print {
+                display: none !important;
+            }
+            main {
+                padding-top: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                display: block !important;
+            }
+            .invoice-card {
+                border: 1px solid #ccc !important;
+                background: white !important;
+                color: black !important;
+                box-shadow: none !important;
+                width: 100% !important;
+                max-width: 600px !important;
+                margin: 20px auto !important;
+                padding: 30px !important;
+                border-radius: 8px !important;
+            }
+            .invoice-card * {
+                color: black !important;
+            }
+            .invoice-card .text-primary-container, 
+            .invoice-card .text-primary {
+                color: #e50914 !important;
+            }
+            .invoice-card .bg-primary-container\/10 {
+                background-color: rgba(229, 9, 20, 0.05) !important;
+                border: 1px solid rgba(229, 9, 20, 0.2) !important;
+            }
+            .invoice-card .bg-surface-container\/50 {
+                background-color: #f3f4f6 !important;
+                border: 1px solid #e5e7eb !important;
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#690003",
+                        "secondary-container": "#4a4949",
+                        "on-secondary": "#313030",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-tertiary": "#303030",
+                        "on-surface": "#e2e2e2",
+                        "error": "#ffb4ab",
+                        "surface-bright": "#37393a",
+                        "on-primary-fixed": "#410001",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "surface": "#121414",
+                        "on-secondary-fixed-variant": "#474646",
+                        "primary-fixed-dim": "#ffb4aa",
+                        "surface-dim": "#121414",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "on-surface-variant": "#e9bcb6",
+                        "surface-container-highest": "#333535",
+                        "surface-tint": "#ffb4aa",
+                        "on-background": "#e2e2e2",
+                        "on-primary-fixed-variant": "#930007",
+                        "secondary": "#c8c6c5",
+                        "tertiary-container": "#727272",
+                        "inverse-on-surface": "#2f3131",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#ffdad5",
+                        "tertiary": "#c6c6c6",
+                        "outline-variant": "#5e3f3b",
+                        "surface-container": "#1e2020",
+                        "inverse-primary": "#c0000c",
+                        "surface-variant": "#333535",
+                        "surface-container-low": "#1a1c1c",
+                        "on-secondary-container": "#bab8b7",
+                        "outline": "#af8782",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-primary-container": "#fff7f6",
+                        "on-error": "#690005",
+                        "background": "#121414",
+                        "primary": "#ffb4aa",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-tertiary-container": "#f8f8f8",
+                        "surface-container-lowest": "#0c0f0f",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-container-high": "#282a2b",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "primary-container": "#e50914",
+                        "tertiary-fixed-dim": "#c6c6c6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "2xl": "64px",
+                        "md": "16px",
+                        "xl": "40px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "60px",
+                        "lg": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Montserrat"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "display-lg-mobile": ["Montserrat"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop py-md bg-surface/70 backdrop-blur-xl dark:bg-background/70 shadow-xl border-b border-white/5 no-print">
+  <div class="flex items-center gap-md">
+    <a class="font-display-lg text-headline-sm font-extrabold text-primary-container dark:text-primary tracking-tight" href="index.html">Netflix Invoice Manager</a>
+  </div>
+  <nav class="hidden md:flex items-center gap-lg">
+    <a class="font-label-md text-label-md text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="index.html">Dashboard</a>
+    <a class="font-label-md text-label-md text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="create-invoice.html">Create Invoice</a>
+    <a class="font-label-md text-label-md text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="invoice-history.html">History</a>
+    <a class="font-label-md text-label-md text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="settings.html">Settings</a>
+  </nav>
+  <div class="flex items-center gap-md">
+    <a class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:brightness-110 transition-all active:scale-95" href="create-invoice.html">New Invoice</a>
+
+  </div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-[100px] pb-2xl px-margin-mobile md:px-margin-desktop flex flex-col items-center justify-center relative">
+<!-- Ambient Background Glow -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0 glow-bg">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-container/10 blur-[120px] rounded-full"></div>
+</div>
+<div class="relative z-10 w-full max-w-4xl grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Message Preview Panel -->
+<div class="lg:col-span-7 flex flex-col">
+<div class="mb-lg no-print">
+<h1 class="font-headline-md text-headline-md text-on-surface mb-xs">Invoice Preview</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Review the generated message before sharing with your pool.</p>
+</div>
+<!-- WhatsApp Bubble Simulation -->
+<div class="invoice-card bg-[#141414] border border-white/10 rounded-[20px] p-xl shadow-[0_0_40px_rgba(0,0,0,0.4)] relative group transition-transform duration-300 hover:scale-[1.02] hover:border-white/20">
+<div class="absolute top-0 right-0 p-md opacity-20 group-hover:opacity-40 transition-opacity no-print">
+<span class="material-symbols-outlined text-[48px]">chat</span>
+</div>
+<div class="space-y-md font-body-md text-body-md leading-relaxed text-on-surface relative z-10">
+<p class="font-headline-sm text-headline-sm text-primary-container">Netflix Monthly Bill</p>
+<div class="grid grid-cols-2 gap-sm pt-sm border-t border-white/10">
+<span class="text-on-surface-variant">Month:</span>
+<span class="font-bold text-on-surface text-right" id="invoiceMonth">October</span>
+<span class="text-on-surface-variant">Plan:</span>
+<span class="font-bold text-on-surface text-right" id="invoicePlan">Premium</span>
+</div>
+<div class="bg-surface-container/50 rounded-lg p-md border border-white/5 my-md flex justify-between items-center">
+<span class="text-on-surface-variant">Total:</span>
+<span class="font-headline-sm text-headline-sm text-on-surface" id="invoiceTotal">LKR 4,500.00</span>
+</div>
+<div class="flex justify-between items-center bg-primary-container/10 rounded-lg p-md border border-primary-container/20">
+<span class="text-on-surface-variant">Each member:</span>
+<span class="font-headline-sm text-headline-sm text-primary-container" id="invoiceSplit">LKR 900.00</span>
+</div>
+<div class="grid grid-cols-2 gap-sm pt-sm border-t border-white/10">
+<span class="text-on-surface-variant">Due date:</span>
+<span class="font-bold text-error text-right flex items-center justify-end gap-xs" id="invoiceDueDate">
+<span class="material-symbols-outlined text-[16px]">event_busy</span> Oct 15
+                            </span>
+<span class="text-on-surface-variant">Bank Details:</span>
+<span class="font-bold text-on-surface text-right" id="invoiceBank">HNB - 123456789</span>
+</div>
+<div class="pt-sm border-t border-white/10 mt-md">
+<span class="text-on-surface-variant block mb-xs">Notes:</span>
+<p class="italic text-on-surface-variant/80" id="invoiceNotes">Please pay before the due date.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Panel -->
+<div class="lg:col-span-5 flex flex-col justify-center space-y-md mt-xl lg:mt-0 pt-[72px] action-panel no-print">
+<button class="w-full bg-primary-container text-white font-label-md text-label-md py-lg px-xl rounded-xl flex items-center justify-center gap-sm hover:brightness-110 active:scale-95 transition-all shadow-[0_0_30px_rgba(229,9,20,0.2)]" id="copyMsgBtn">
+<span class="material-symbols-outlined filled">share</span>
+                    <span id="copyBtnText">Copy WhatsApp Message</span>
+                </button>
+<button class="w-full bg-primary-container text-white font-label-md text-label-md py-lg px-xl rounded-xl flex items-center justify-center gap-sm hover:brightness-110 active:scale-95 transition-all shadow-[0_0_30px_rgba(229,9,20,0.2)]" id="sendWhatsappBtn">
+<span class="material-symbols-outlined">send</span>
+                    Send WhatsApp Message
+                </button>
+<div class="h-px w-full bg-white/10 my-md"></div>
+<div class="grid grid-cols-2 gap-md">
+<button class="w-full border-[1.5px] border-white/50 text-white font-label-md text-label-md py-md px-md rounded-xl flex flex-col items-center justify-center gap-xs hover:bg-white/5 active:scale-95 transition-all" id="printBtn">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+                        Download PDF / Print
+                    </button>
+<button class="w-full border-[1.5px] border-white/50 text-white font-label-md text-label-md py-md px-md rounded-xl flex flex-col items-center justify-center gap-xs hover:bg-white/5 active:scale-95 transition-all" id="payBtn">
+<span class="material-symbols-outlined" id="payIcon">check_circle</span>
+                        <span id="payBtnText">Mark as Paid</span>
+                    </button>
+</div>
+<a class="w-full text-white font-label-md text-label-md py-md px-xl rounded-xl flex items-center justify-center gap-sm hover:bg-white/5 active:scale-95 transition-all mt-sm opacity-60 hover:opacity-100" href="invoice-history.html">
+<span class="material-symbols-outlined">arrow_back</span>
+                    Back to History
+                </a>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-lowest dark:bg-surface-container-lowest mt-auto border-t border-white/5 no-print">
+<span class="font-display-lg text-label-md font-bold text-primary dark:text-primary tracking-tight" href="index.html">Netflix Invoice Manager</span>
+<div class="flex items-center gap-lg">
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary-container transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary-container transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary-container transition-colors opacity-80 hover:opacity-100" href="#">Contact Support</a>
+</div>
+<span class="font-label-sm text-label-sm text-on-secondary-container opacity-80">© 2024 Netflix Invoice Manager. All rights reserved.</span>
+</footer>
+
+<script src="js/store.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Parse ID from query params
+        const urlParams = new URLSearchParams(window.location.search);
+        let id = urlParams.get('id');
+        
+        let invoice = null;
+        if (id) {
+            invoice = AppStore.getInvoice(id);
+        }
+        
+        // If not found by ID, get the latest invoice
+        if (!invoice) {
+            const invoices = AppStore.getInvoices();
+            if (invoices.length > 0) {
+                invoice = invoices[0];
+                id = invoice.id;
+            }
+        }
+        
+        // If still no invoice, redirect to create a new one
+        if (!invoice) {
+            window.location.href = "create-invoice.html";
+            return;
+        }
+
+        const settings = AppStore.getSettings();
+
+        // Populate elements
+        document.getElementById('invoiceMonth').textContent = `${invoice.month} ${invoice.year}`;
+        document.getElementById('invoicePlan').textContent = invoice.plan;
+        
+        const formatLkr = (val) => `LKR ${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        
+        document.getElementById('invoiceTotal').textContent = formatLkr(invoice.totalLkr);
+        document.getElementById('invoiceSplit').textContent = formatLkr(invoice.perMemberLkr);
+        
+        // Format Due Date
+        const dueDate = new Date(invoice.dueDate);
+        const formattedDate = dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        document.getElementById('invoiceDueDate').innerHTML = `<span class="material-symbols-outlined text-[16px]">event_busy</span> ${formattedDate}`;
+        
+        // Bank details
+        const bankStr = `${settings.bankNameBranch || 'HNB'} - ${settings.bankAccountNumber || '123456789'}`;
+        document.getElementById('invoiceBank').textContent = bankStr;
+        
+        document.getElementById('invoiceNotes').textContent = invoice.notes || 'No notes added.';
+
+        // Setup Copy button and WhatsApp message template
+        const getWhatsappMsg = () => {
+            const formattedTotal = parseFloat(invoice.totalLkr).toLocaleString('en-US', { minimumFractionDigits: 2 });
+            const formattedSplit = parseFloat(invoice.perMemberLkr).toLocaleString('en-US', { minimumFractionDigits: 2 });
+            return `🍿 *Netflix Monthly Bill* 🍿\n` +
+                   `------------------------------------\n` +
+                   `*Month:* ${invoice.month} ${invoice.year}\n` +
+                   `*Plan:* ${invoice.plan}\n` +
+                   `*Total Bill:* LKR ${formattedTotal}\n` +
+                   `*Members Count:* ${invoice.membersCount}\n` +
+                   `------------------------------------\n` +
+                   `👉 *Your Share:* LKR ${formattedSplit}\n` +
+                   `👉 *Due Date:* ${formattedDate}\n` +
+                   `------------------------------------\n` +
+                   `*Bank Details:*\n` +
+                   `- Bank: ${settings.bankNameBranch || 'HNB - Head Office'}\n` +
+                   `- Name: ${settings.bankAccountName || 'Amila Perera'}\n` +
+                   `- Account: ${settings.bankAccountNumber || '123456789'}\n` +
+                   `------------------------------------\n` +
+                   `*Notes:* ${invoice.notes || 'Please transfer promptly.'}`;
+        };
+
+        const copyBtn = document.getElementById('copyMsgBtn');
+        const copyText = document.getElementById('copyBtnText');
+        copyBtn.addEventListener('click', () => {
+            const msg = getWhatsappMsg();
+            navigator.clipboard.writeText(msg).then(() => {
+                copyText.textContent = "Copied to Clipboard!";
+                copyBtn.classList.remove('bg-primary-container');
+                copyBtn.classList.add('bg-green-700');
+                setTimeout(() => {
+                    copyText.textContent = "Copy WhatsApp Message";
+                    copyBtn.classList.remove('bg-green-700');
+                    copyBtn.classList.add('bg-primary-container');
+                }, 2000);
+            });
+        });
+
+        const sendBtn = document.getElementById('sendWhatsappBtn');
+        sendBtn.addEventListener('click', () => {
+            const msg = encodeURIComponent(getWhatsappMsg());
+            // Open web WhatsApp URL
+            window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
+        });
+
+        // Setup Mark as Paid button
+        const payBtn = document.getElementById('payBtn');
+        const payBtnText = document.getElementById('payBtnText');
+        const payIcon = document.getElementById('payIcon');
+        
+        function updatePayBtnState() {
+            if (invoice.status === 'Paid') {
+                payBtnText.textContent = "Mark as Pending";
+                payBtn.classList.remove('border-white/50');
+                payBtn.classList.add('bg-green-700/20', 'border-green-600', 'text-green-400');
+                payIcon.textContent = "check_circle";
+                payIcon.classList.add('filled');
+            } else {
+                payBtnText.textContent = "Mark as Paid";
+                payBtn.classList.remove('bg-green-700/20', 'border-green-600', 'text-green-400');
+                payBtn.classList.add('border-white/50', 'text-white');
+                payIcon.textContent = "check_circle";
+                payIcon.classList.remove('filled');
+            }
+        }
+        updatePayBtnState();
+
+        payBtn.addEventListener('click', () => {
+            if (invoice.status === 'Paid') {
+                invoice.status = 'Pending';
+                invoice.payments.forEach(p => p.status = 'Pending');
+            } else {
+                invoice.status = 'Paid';
+                invoice.payments.forEach(p => p.status = 'Paid');
+            }
+            AppStore.saveInvoice(invoice);
+            updatePayBtnState();
+        });
+
+        // Print dialog trigger
+        document.getElementById('printBtn').addEventListener('click', () => {
+            window.print();
+        });
+    });
+</script>
+</body></html>

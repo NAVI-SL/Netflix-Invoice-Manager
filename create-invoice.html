@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Invoice - Netflix Invoice Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#690003",
+                      "secondary-container": "#4a4949",
+                      "on-secondary": "#313030",
+                      "secondary-fixed": "#e5e2e1",
+                      "on-tertiary": "#303030",
+                      "on-surface": "#e2e2e2",
+                      "error": "#ffb4ab",
+                      "surface-bright": "#37393a",
+                      "on-primary-fixed": "#410001",
+                      "on-tertiary-fixed": "#1b1b1b",
+                      "surface": "#121414",
+                      "on-secondary-fixed-variant": "#474646",
+                      "primary-fixed-dim": "#ffb4aa",
+                      "surface-dim": "#121414",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-error-container": "#ffdad6",
+                      "on-surface-variant": "#e9bcb6",
+                      "surface-container-highest": "#333535",
+                      "surface-tint": "#ffb4aa",
+                      "on-background": "#e2e2e2",
+                      "on-primary-fixed-variant": "#930007",
+                      "secondary": "#c8c6c5",
+                      "tertiary-container": "#727272",
+                      "inverse-on-surface": "#2f3131",
+                      "error-container": "#93000a",
+                      "primary-fixed": "#ffdad5",
+                      "tertiary": "#c6c6c6",
+                      "outline-variant": "#5e3f3b",
+                      "surface-container": "#1e2020",
+                      "inverse-primary": "#c0000c",
+                      "surface-variant": "#333535",
+                      "surface-container-low": "#1a1c1c",
+                      "on-secondary-container": "#bab8b7",
+                      "outline": "#af8782",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "on-primary-container": "#fff7f6",
+                      "on-error": "#690005",
+                      "background": "#121414",
+                      "primary": "#ffb4aa",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "on-tertiary-container": "#f8f8f8",
+                      "surface-container-lowest": "#0c0f0f",
+                      "inverse-surface": "#e2e2e2",
+                      "surface-container-high": "#282a2b",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "primary-container": "#e50914",
+                      "tertiary-fixed-dim": "#c6c6c6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "2xl": "64px",
+                      "md": "16px",
+                      "xl": "40px",
+                      "margin-mobile": "16px",
+                      "sm": "8px",
+                      "xs": "4px",
+                      "gutter": "24px",
+                      "margin-desktop": "60px",
+                      "lg": "24px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Montserrat"],
+                      "label-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-sm": ["Montserrat"],
+                      "headline-md": ["Montserrat"],
+                      "display-lg-mobile": ["Montserrat"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Form Element Resets & Custom Styles */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        input.input-modern, select.input-modern, textarea.input-modern {
+            width: 100%;
+            background-color: #141414;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 8px 16px;
+            color: #e2e2e2;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            transition: all 0.30s ease;
+            outline: none;
+        }
+        input.input-modern:focus, select.input-modern:focus, textarea.input-modern:focus {
+            border-color: #e50914;
+            box-shadow: 0 0 0 1px #e50914;
+        }
+        input.input-modern::placeholder, textarea.input-modern::placeholder {
+            color: rgba(226, 226, 226, 0.3);
+        }
+        select.input-modern {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e2e2e2' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-white">
+<!-- TopNavBar Shared Component -->
+<header class="bg-surface/70 backdrop-blur-xl dark:bg-background/70 shadow-xl fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md">
+<div class="flex items-center gap-xl">
+<a class="font-display-lg text-headline-md font-extrabold text-primary-container dark:text-primary tracking-tight" href="index.html">Netflix Invoice Manager</a>
+<nav class="hidden md:flex items-center gap-lg font-body-md text-body-md">
+<a class="text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors" href="index.html">Dashboard</a>
+<!-- Active Navigation Item -->
+<a class="text-primary-container dark:text-primary border-b-2 border-primary-container dark:border-primary pb-1" href="create-invoice.html">Create Invoice</a>
+<a class="text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors" href="invoice-history.html">History</a>
+<a class="text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors" href="settings.html">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<a class="hidden md:block scale-95 active:opacity-80 transition-all font-label-md text-label-md bg-transparent border-[1.5px] border-white/50 text-white px-lg py-sm rounded-full hover:border-white" href="create-invoice.html">
+                New Invoice
+            </a>
+
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow pt-[100px] md:pt-[120px] pb-2xl px-margin-mobile md:px-margin-desktop w-full max-w-[1440px] mx-auto">
+<div class="mb-xl">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-sm">Draft New Invoice</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Configure the billing period, calculate appropriate fees, and split the final amount accurately among members.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Form Area (Left Column) -->
+<form class="lg:col-span-8 flex flex-col gap-xl" id="invoiceForm">
+<!-- Section 1: Billing Info -->
+<section class="glass-panel rounded-xl p-lg md:p-xl relative overflow-hidden group hover:border-white/20 transition-colors">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container">receipt_long</span>
+                        Billing Information
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+    <div>
+        <label class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">Billing Month</label>
+        <select class="input-modern" id="month" required="">
+            <option disabled="" value="">Select Month</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option selected="" value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+        </select>
+    </div>
+    <div>
+        <label class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">Subscription Plan</label>
+        <select class="input-modern" id="plan" required="">
+            <option selected="" value="Premium">Premium (4K + HDR)</option>
+            <option value="Standard">Standard (1080p)</option>
+        </select>
+    </div>
+    <div>
+        <label class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">Netflix Amount (USD)</label>
+        <div class="relative">
+            <span class="absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md"></span>
+            <input class="input-modern pl-[32px]" id="baseAmount" required="" step="0.01" type="number" value="10"/>
+        </div>
+    </div>
+    <div class="flex flex-col gap-xs">
+        <div class="flex justify-between items-end">
+            <label class="font-label-sm text-label-sm text-on-surface-variant block">USD to LKR Rate</label>
+            <span class="text-[10px] text-on-surface-variant/60 uppercase tracking-tighter" id="rateTimestamp">Last Updated: Just Now</span>
+        </div>
+        <div class="flex gap-sm">
+            <div class="relative flex-grow">
+                <input class="input-modern" id="exchangeRate" required="" step="0.01" type="number" value="300.00"/>
+                <span class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md text-label-sm">LKR</span>
+            </div>
+            <button class="bg-primary-container text-white px-md rounded-lg hover:brightness-110 transition-all flex items-center justify-center" type="button" id="syncRateBtn">
+                <span class="material-symbols-outlined text-[20px]" id="syncIcon">sync</span>
+            </button>
+        </div>
+        <label class="flex items-center gap-sm mt-xs cursor-pointer">
+            <input class="rounded border-white/10 bg-surface-container-highest text-primary-container focus:ring-primary-container" id="manualRate" type="checkbox"/>
+            <span class="text-label-sm text-on-surface-variant">Use Manual Rate</span>
+        </label>
+    </div>
+</div>
+</section>
+<!-- Section 2: Fees & Tax -->
+<section class="glass-panel rounded-xl p-lg md:p-xl relative overflow-hidden group hover:border-white/20 transition-colors">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">account_balance</span>
+                        Fees &amp; Tax
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+    <div>
+        <label class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">Bank Transfer Fee (%)</label>
+        <div class="relative">
+            <input class="input-modern pr-[32px]" id="bankFee" step="0.01" type="number" value="0"/>
+            <span class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md">%</span>
+        </div>
+    </div>
+    <div>
+        <label class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">Tax Percentage (%)</label>
+        <div class="relative">
+            <input class="input-modern pr-[32px]" id="taxRate" step="0.1" type="number" value="0.00"/>
+            <span class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md">%</span>
+        </div>
+    </div>
+</div>
+</section>
+<!-- Section 3: Split Details -->
+<section class="glass-panel rounded-xl p-lg md:p-xl relative overflow-hidden group hover:border-white/20 transition-colors">
+<div class="absolute top-0 left-0 w-1 h-full bg-outline opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline">group</span>
+                        Split Details
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">Number of Members</label>
+<input class="input-modern" id="members" max="10" min="1" required="" type="number" value="5"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">Payment Due Date</label>
+<input class="input-modern text-on-surface-variant" id="dueDate" required="" type="date"/>
+</div>
+</div>
+</section>
+<!-- Section 4: Additional -->
+<section class="glass-panel rounded-xl p-lg md:p-xl">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-tertiary">notes</span>
+                        Additional Information
+                    </h2>
+<div class="grid grid-cols-1 gap-md">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">Notes to Members</label>
+<textarea class="input-modern resize-none h-24" id="notes" placeholder="e.g., Please ensure payment is made promptly to avoid service disruption."></textarea>
+</div>
+</div>
+</section>
+</form>
+<!-- Live Preview Area (Right Column) -->
+<aside class="lg:col-span-4 relative">
+<div class="sticky top-[140px] glass-panel rounded-xl p-lg flex flex-col gap-lg shadow-2xl">
+<div class="flex items-center justify-between pb-sm border-b border-white/10">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Live Preview</h3>
+<span class="flex h-3 w-3 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary-container"></span>
+</span>
+</div>
+<div class="flex flex-col gap-sm font-body-md text-body-md">
+    <div class="flex justify-between items-center text-on-surface-variant">
+        <span>Base LKR (USD × Rate)</span>
+        <span id="previewBase">Rs. 0.00</span>
+    </div>
+    <div class="flex justify-between items-center text-on-surface-variant">
+        <span>Bank Fee (Calculated)</span>
+        <span id="previewFee">Rs. 0.00</span>
+    </div>
+    <div class="flex justify-between items-center text-on-surface-variant">
+        <span>Tax (Calculated)</span>
+        <span id="previewTax">Rs. 0.00</span>
+    </div>
+</div>
+<div class="border-t border-white/10 pt-md flex justify-between items-end">
+<span class="font-body-md text-body-md text-on-surface">Total Invoice (LKR)</span>
+<span class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary-container" id="previewTotal">Rs. 0.00</span>
+</div>
+<div class="bg-surface-container-highest rounded-lg p-md flex flex-col items-center justify-center mt-sm border border-white/5">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-xs uppercase tracking-wider">Amount Per Member</span>
+<span class="font-headline-md text-headline-md text-on-surface" id="previewSplit">Rs. 0.00</span>
+</div>
+<button class="w-full bg-primary-container hover:brightness-110 text-white font-label-md text-label-md py-md rounded-lg font-bold transition-all shadow-[0_0_20px_rgba(229,9,20,0.3)] hover:shadow-[0_0_30px_rgba(229,9,20,0.5)] active:scale-[0.98] mt-sm flex items-center justify-center gap-sm" form="invoiceForm" type="submit">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                        Generate &amp; Send Invoice
+                    </button>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant/60">This will notify all active members.</p>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer Shared Component -->
+<footer class="w-full py-xl px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-white/5">
+<div class="font-display-lg text-label-md font-bold text-primary dark:text-primary tracking-wide">
+            © 2024 Netflix Invoice Manager. All rights reserved.
+        </div>
+<nav class="flex items-center gap-md font-label-sm text-label-sm">
+<a class="text-on-secondary-container hover:text-primary-container transition-colors opacity-80" href="#">Privacy Policy</a>
+<a class="text-on-secondary-container hover:text-primary-container transition-colors opacity-80" href="#">Terms of Service</a>
+<a class="text-on-secondary-container hover:text-primary-container transition-colors opacity-80" href="#">Contact Support</a>
+</nav>
+</footer>
+
+<!-- JavaScript for Live Preview Calculation & State Management -->
+<script src="js/store.js"></script>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Member list database to seed payment statuses
+            const memberPool = ["Sarith", "Sachin", "Aizen", "Heshan", "Navitha"];
+
+            // Load settings
+            const settings = AppStore.getSettings();
+            
+            // Set defaults in form
+            document.getElementById('bankFee').value = settings.bankFeePercent;
+            document.getElementById('taxRate').value = settings.taxPercent;
+            document.getElementById('members').value = settings.defaultMembers;
+            document.getElementById('notes').value = settings.defaultNotes;
+
+            const inputs = {
+                base: document.getElementById('baseAmount'),
+                exchangeRate: document.getElementById('exchangeRate'),
+                fee: document.getElementById('bankFee'),
+                taxRate: document.getElementById('taxRate'),
+                members: document.getElementById('members')
+            };
+
+            const displays = {
+                base: document.getElementById('previewBase'),
+                fee: document.getElementById('previewFee'),
+                tax: document.getElementById('previewTax'),
+                total: document.getElementById('previewTotal'),
+                split: document.getElementById('previewSplit')
+            };
+
+            const formatCurrencyLkr = (val) => `Rs. ${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+            function updatePreview() {
+                const baseUsd = parseFloat(inputs.base.value) || 0;
+                const rate = parseFloat(inputs.exchangeRate.value) || 0;
+                const feePercent = parseFloat(inputs.fee.value) || 0;
+                const taxRatePercent = parseFloat(inputs.taxRate.value) || 0;
+                const membersVal = parseInt(inputs.members.value) || 1;
+
+                // Conversion and additions
+                const baseLkr = baseUsd * rate;
+                const bankFeeLkr = baseLkr * (feePercent / 100);
+                const taxLkr = baseLkr * (taxRatePercent / 100);
+                
+                const totalLkr = baseLkr + bankFeeLkr + taxLkr;
+                const splitLkr = totalLkr / membersVal;
+
+                displays.base.textContent = formatCurrencyLkr(baseLkr);
+                displays.fee.textContent = formatCurrencyLkr(bankFeeLkr);
+                displays.tax.textContent = formatCurrencyLkr(taxLkr);
+                displays.total.textContent = formatCurrencyLkr(totalLkr);
+                displays.split.textContent = formatCurrencyLkr(splitLkr);
+            }
+
+            // Set default date to today
+            document.getElementById('dueDate').valueAsDate = new Date();
+
+            // Add event listeners to inputs
+            Object.values(inputs).forEach(input => {
+                input.addEventListener('input', updatePreview);
+            });
+
+            // Initial calculation
+            updatePreview();
+
+            // Exchange Rate API Integration
+            const syncBtn = document.getElementById('syncRateBtn');
+            const rateInput = document.getElementById('exchangeRate');
+            const manualRateCheckbox = document.getElementById('manualRate');
+            const syncIcon = document.getElementById('syncIcon');
+            const rateTimestamp = document.getElementById('rateTimestamp');
+
+            // Handle manual mode toggle
+            manualRateCheckbox.addEventListener('change', () => {
+                rateInput.disabled = !manualRateCheckbox.checked;
+            });
+            // Initial state: rate is locked unless manual is checked
+            rateInput.disabled = !manualRateCheckbox.checked;
+
+            async function updateRateFromApi() {
+                if (manualRateCheckbox.checked) return;
+                
+                syncIcon.classList.add('animate-spin');
+                try {
+                    const res = await fetch("https://open.er-api.com/v6/latest/USD");
+                    const data = await res.json();
+                    if (data && data.rates && data.rates.LKR) {
+                        const rate = parseFloat(data.rates.LKR).toFixed(2);
+                        rateInput.value = rate;
+                        rateTimestamp.textContent = `Last Updated: ${new Date().toLocaleTimeString()}`;
+                        updatePreview();
+                    }
+                } catch (e) {
+                    console.error("Error updating rate:", e);
+                    rateTimestamp.textContent = "Last Update Failed. Using default.";
+                } finally {
+                    syncIcon.classList.remove('animate-spin');
+                }
+            }
+
+            syncBtn.addEventListener('click', updateRateFromApi);
+            // Fetch rate automatically on load
+            updateRateFromApi();
+
+            // Form submission
+            document.getElementById('invoiceForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const baseUsd = parseFloat(inputs.base.value) || 0;
+                const rate = parseFloat(inputs.exchangeRate.value) || 0;
+                const feePercent = parseFloat(inputs.fee.value) || 0;
+                const taxRatePercent = parseFloat(inputs.taxRate.value) || 0;
+                const membersVal = parseInt(inputs.members.value) || 1;
+
+                const baseLkr = baseUsd * rate;
+                const bankFeeLkr = baseLkr * (feePercent / 100);
+                const taxLkr = baseLkr * (taxRatePercent / 100);
+                const totalLkr = baseLkr + bankFeeLkr + taxLkr;
+                const splitLkr = totalLkr / membersVal;
+
+                // Select names for members based on count
+                const invoicePayments = [];
+                for (let i = 0; i < membersVal; i++) {
+                    const name = memberPool[i % memberPool.length] + (i >= memberPool.length ? ` ${Math.floor(i / memberPool.length) + 1}` : "");
+                    // Make the creator (first member) Paid, rest Pending
+                    invoicePayments.push({
+                        name: name,
+                        status: i === 0 ? "Paid" : "Pending"
+                    });
+                }
+
+                const newInvoice = {
+                    id: "inv_" + Date.now(),
+                    month: document.getElementById('month').value,
+                    year: new Date().getFullYear(),
+                    plan: document.getElementById('plan').value,
+                    baseAmountUsd: baseUsd,
+                    exchangeRate: rate,
+                    baseAmountLkr: baseLkr,
+                    bankFeePercent: feePercent,
+                    bankFeeLkr: bankFeeLkr,
+                    taxPercent: taxRatePercent,
+                    taxLkr: taxLkr,
+                    totalLkr: totalLkr,
+                    membersCount: membersVal,
+                    perMemberLkr: splitLkr,
+                    dueDate: document.getElementById('dueDate').value,
+                    notes: document.getElementById('notes').value,
+                    status: "Pending",
+                    payments: invoicePayments
+                };
+
+                AppStore.saveInvoice(newInvoice);
+
+                // Redirect to Preview page
+                window.location.href = `invoice-preview.html?id=${newInvoice.id}`;
+            });
+        });
+    </script>
+</body></html>

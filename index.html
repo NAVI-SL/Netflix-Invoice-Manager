@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Netflix Invoice Manager - Dashboard</title>
+<!-- Material Symbols Literal Transcription -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#690003",
+                        "secondary-container": "#4a4949",
+                        "on-secondary": "#313030",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-tertiary": "#303030",
+                        "on-surface": "#e2e2e2",
+                        "error": "#ffb4ab",
+                        "surface-bright": "#37393a",
+                        "on-primary-fixed": "#410001",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "surface": "#121414",
+                        "on-secondary-fixed-variant": "#474646",
+                        "primary-fixed-dim": "#ffb4aa",
+                        "surface-dim": "#121414",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "on-surface-variant": "#e9bcb6",
+                        "surface-container-highest": "#333535",
+                        "surface-tint": "#ffb4aa",
+                        "on-background": "#e2e2e2",
+                        "on-primary-fixed-variant": "#930007",
+                        "secondary": "#c8c6c5",
+                        "tertiary-container": "#727272",
+                        "inverse-on-surface": "#2f3131",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#ffdad5",
+                        "tertiary": "#c6c6c6",
+                        "outline-variant": "#5e3f3b",
+                        "surface-container": "#1e2020",
+                        "inverse-primary": "#c0000c",
+                        "surface-variant": "#333535",
+                        "surface-container-low": "#1a1c1c",
+                        "on-secondary-container": "#bab8b7",
+                        "outline": "#af8782",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-primary-container": "#fff7f6",
+                        "on-error": "#690005",
+                        "background": "#121414",
+                        "primary": "#ffb4aa",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-tertiary-container": "#f8f8f8",
+                        "surface-container-lowest": "#0c0f0f",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-container-high": "#282a2b",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "primary-container": "#e50914",
+                        "tertiary-fixed-dim": "#c6c6c6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "2xl": "64px",
+                        "md": "16px",
+                        "xl": "40px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "60px",
+                        "lg": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Montserrat"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "display-lg-mobile": ["Montserrat"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md min-h-screen flex flex-col antialiased">
+<!-- TopNavBar Shared Component -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop py-md bg-surface/70 backdrop-blur-xl shadow-xl transition-all duration-300">
+<div class="flex items-center gap-xl">
+<!-- Brand Logo -->
+<a class="font-display-lg text-headline-md font-extrabold text-primary scale-95 active:opacity-80 transition-all hover:opacity-80" href="index.html">
+                Netflix Invoice Manager
+            </a>
+<!-- Desktop Navigation -->
+<ul class="hidden md:flex items-center gap-lg">
+<!-- Active Item: Dashboard -->
+<li>
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1 hover:text-primary transition-colors cursor-pointer" href="index.html">
+                        Dashboard
+                    </a>
+</li>
+<li>
+<a class="font-label-md text-label-md text-secondary-fixed-dim hover:text-primary transition-colors cursor-pointer scale-95 active:opacity-80" href="create-invoice.html">
+                        Create Invoice
+                    </a>
+</li>
+<li>
+<a class="font-label-md text-label-md text-secondary-fixed-dim hover:text-primary transition-colors cursor-pointer scale-95 active:opacity-80" href="invoice-history.html">
+                        History
+                    </a>
+</li>
+<li>
+<a class="font-label-md text-label-md text-secondary-fixed-dim hover:text-primary transition-colors cursor-pointer scale-95 active:opacity-80" href="settings.html">
+                        Settings
+                    </a>
+</li>
+</ul>
+</div>
+<div class="flex items-center gap-md">
+<!-- Trailing Action -->
+<a class="hidden md:flex items-center justify-center bg-primary-container text-white font-label-md text-label-md font-bold px-lg py-sm rounded-full hover:brightness-110 transition-all scale-95 active:opacity-80" href="create-invoice.html">
+                New Invoice
+            </a>
+
+<!-- Mobile Menu Toggle (Decorative) -->
+<button class="md:hidden text-secondary-fixed-dim hover:text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-[100px] px-margin-mobile md:px-margin-desktop pb-2xl flex flex-col gap-xl">
+<!-- Header -->
+<header class="flex flex-col gap-xs mt-md">
+<h1 class="font-headline-md text-headline-md text-on-background">Overview</h1>
+<p class="font-body-md text-body-md text-on-surface-variant" id="dashboardSub">Manage your shared subscriptions and pending collections.</p>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter" id="dashboardContent">
+<!-- Hero Summary Card (Spans 8 cols on desktop) -->
+<section class="col-span-1 md:col-span-8 bg-surface rounded-xl border border-white/10 overflow-hidden relative group hover:scale-[1.01] transition-transform duration-500 ease-out shadow-[0_0_40px_rgba(0,0,0,0.4)]">
+<!-- Abstract Cinematic Background -->
+<div class="absolute inset-0 z-0 opacity-40 mix-blend-screen bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCBGtoyxVo3RMZa_6vAgLVt9bxQTOnpPhJ4SEJ3mYbLICc81FNWcRaf4f-RNFOZd_iHPUvguU00sCEdrh3jFKMCzYQ3_wxvcMDfak8w20DyUYBd4A4LGSUYuKHhftbX4TmYRNCU51E_TFimpicZ-v-AREZGKFSXf5v1kkO6LANTlKu7fcNilXlWS518OyajI0R0t-gU9I0IS0vPHK-Ri5t0mc-KiI97laMak9aAKcRW-8bnn0R97WmTxbpJuVkVkKH2gQpvoeG3b9M');"></div>
+<div class="absolute inset-0 z-0 bg-gradient-to-t from-surface via-surface/80 to-transparent"></div>
+<div class="relative z-10 p-xl flex flex-col h-full justify-between gap-xl">
+<div class="flex justify-between items-start">
+<div>
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-sm" id="invoiceLabel">Monthly Bill Summary</h2>
+<div class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-background flex items-baseline gap-sm" id="activeTotal">
+<span class="font-body-lg text-body-lg text-primary-container">LKR</span> 0.00
+                            </div>
+</div>
+<!-- Status Badge -->
+<div class="bg-error-container/20 border border-primary-container text-primary flex items-center gap-xs px-sm py-xs rounded-full" id="activeStatusContainer">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse" id="activeStatusDot"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider" id="activeStatusText">Pending</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-md pt-lg border-t border-white/10">
+<div class="flex flex-col gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">group</span> Members
+                            </span>
+<span class="font-headline-sm text-headline-sm text-on-background" id="activeMembers">0</span>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">payments</span> Each Member
+                            </span>
+<span class="font-headline-sm text-headline-sm text-on-background" id="activeSplit">LKR 0.00</span>
+</div>
+<div class="flex flex-col gap-xs col-span-2 md:col-span-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span> Due Date
+                            </span>
+<span class="font-headline-sm text-headline-sm text-on-background" id="activeDueDate">-</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Secondary Cards Column (Spans 4 cols on desktop) -->
+<div class="col-span-1 md:col-span-4 flex flex-col gap-gutter">
+<!-- Quick Stat: Total Invoices -->
+<div class="bg-surface rounded-xl border border-white/10 p-lg flex items-center gap-md hover:border-white/20 hover:bg-surface-container transition-all">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Total Invoices Generated</p>
+<p class="font-headline-md text-headline-md text-on-background" id="statTotalInvoices">0</p>
+</div>
+</div>
+<!-- Quick Stat: Total Collected -->
+<div class="bg-surface rounded-xl border border-white/10 p-lg flex items-center gap-md hover:border-white/20 hover:bg-surface-container transition-all">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-background">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Total Collected (Paid Splits)</p>
+<p class="font-headline-md text-headline-md text-on-background" id="statTotalCollected"><span class="text-on-surface-variant text-[14px]">LKR</span> 0.00</p>
+</div>
+</div>
+<!-- Action Card -->
+<button class="w-full bg-transparent border border-white/20 text-white font-label-md text-label-md font-bold px-lg py-md rounded-xl hover:bg-white/5 transition-all flex items-center justify-center gap-sm mt-auto" id="sendReminderBtn">
+<span class="material-symbols-outlined">notifications_active</span> Send Reminders
+                </button>
+</div>
+</div>
+<!-- Bottom Section: Upcoming Payments -->
+<section class="mt-md" id="upcomingSection">
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-lg flex items-center gap-sm border-b border-white/10 pb-sm">
+<span class="material-symbols-outlined text-primary-container">pending_actions</span> Upcoming Payments (Active Invoice)
+            </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md" id="upcomingList">
+<!-- Dynamically populated -->
+</div>
+</section>
+
+<!-- Empty State when no invoices at all -->
+<div class="hidden flex-col items-center justify-center py-2xl text-center border border-dashed border-surface-variant rounded-xl mt-xl" id="emptyDashboard">
+<span class="material-symbols-outlined text-[64px] text-surface-variant mb-md font-extralight">receipt_long</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">No Active Subscription Split</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg max-w-md mx-auto">You haven't setup any invoices yet. Draft your first billing split to start tracking collections.</p>
+<a class="bg-primary-container text-white font-label-md text-label-md px-lg py-sm rounded-full hover:brightness-110 transition-all shadow-ambient inline-block" href="create-invoice.html">
+                Setup First Invoice
+            </a>
+</div>
+</main>
+<!-- Footer Shared Component -->
+<footer class="w-full py-xl px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-lowest mt-auto opacity-80">
+<div class="font-label-sm text-label-sm text-primary">
+            © 2024 Netflix Invoice Manager. All rights reserved.
+        </div>
+<ul class="flex flex-wrap items-center gap-md">
+<li>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary-container transition-colors" href="#">
+                    Privacy Policy
+                </a>
+</li>
+<li>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary-container transition-colors" href="#">
+                    Terms of Service
+                </a>
+</li>
+<li>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary-container transition-colors" href="#">
+                    Contact Support
+                </a>
+</li>
+</ul>
+</footer>
+
+<script src="js/store.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navbar = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-xl', 'bg-surface/90');
+                navbar.classList.remove('bg-surface/70');
+            } else {
+                navbar.classList.remove('shadow-xl', 'bg-surface/90');
+                navbar.classList.add('bg-surface/70');
+            }
+        });
+
+        // Initialize Store State & Dynamic Loading
+        let invoices = AppStore.getInvoices();
+        const settings = AppStore.getSettings();
+
+        const formatLkr = (val) => `${parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+        function updateDashboard() {
+            invoices = AppStore.getInvoices();
+            
+            if (invoices.length === 0) {
+                document.getElementById('dashboardContent').classList.add('hidden');
+                document.getElementById('upcomingSection').classList.add('hidden');
+                document.getElementById('emptyDashboard').classList.remove('hidden');
+                document.getElementById('statTotalInvoices').textContent = "0";
+                document.getElementById('statTotalCollected').innerHTML = `<span class="text-on-surface-variant text-[14px]">LKR</span> 0.00`;
+                return;
+            } else {
+                document.getElementById('dashboardContent').classList.remove('hidden');
+                document.getElementById('upcomingSection').classList.remove('hidden');
+                document.getElementById('emptyDashboard').classList.add('hidden');
+            }
+
+            // Find active invoice: first pending, or just the first invoice
+            let activeInvoice = invoices.find(inv => inv.status === 'Pending') || invoices[0];
+            
+            // Render active bill details
+            document.getElementById('invoiceLabel').textContent = `Bill Summary: ${activeInvoice.month} ${activeInvoice.year}`;
+            document.getElementById('activeTotal').innerHTML = `<span class="font-body-lg text-body-lg text-primary-container mr-sm">LKR</span>${formatLkr(activeInvoice.totalLkr)}`;
+            
+            const statusText = document.getElementById('activeStatusText');
+            const statusDot = document.getElementById('activeStatusDot');
+            const statusContainer = document.getElementById('activeStatusContainer');
+            
+            statusText.textContent = activeInvoice.status;
+            if (activeInvoice.status === 'Paid') {
+                statusDot.classList.remove('animate-pulse', 'bg-primary-container');
+                statusDot.classList.add('bg-green-500');
+                statusContainer.classList.remove('border-primary-container', 'text-primary');
+                statusContainer.classList.add('border-green-600', 'text-green-400');
+            } else {
+                statusDot.classList.add('animate-pulse', 'bg-primary-container');
+                statusDot.classList.remove('bg-green-500');
+                statusContainer.classList.add('border-primary-container', 'text-primary');
+                statusContainer.classList.remove('border-green-600', 'text-green-400');
+            }
+
+            document.getElementById('activeMembers').textContent = activeInvoice.membersCount;
+            document.getElementById('activeSplit').textContent = `LKR ${formatLkr(activeInvoice.perMemberLkr)}`;
+            
+            // Format Due Date
+            const dueDate = new Date(activeInvoice.dueDate);
+            const formattedDate = dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            document.getElementById('activeDueDate').textContent = formattedDate;
+
+            // Render stats
+            document.getElementById('statTotalInvoices').textContent = invoices.length;
+            
+            // Calculate Total Collected across all invoices/payments
+            let totalCollected = 0;
+            invoices.forEach(inv => {
+                inv.payments.forEach(p => {
+                    if (p.status === 'Paid') {
+                        totalCollected += inv.perMemberLkr;
+                    }
+                });
+            });
+            document.getElementById('statTotalCollected').innerHTML = `<span class="text-on-surface-variant text-[14px]">LKR</span> ${formatLkr(totalCollected)}`;
+
+            // Render upcoming payments for active invoice
+            const upcomingList = document.getElementById('upcomingList');
+            upcomingList.innerHTML = '';
+
+            activeInvoice.payments.forEach(payment => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = `bg-surface rounded-xl border border-white/10 p-md flex items-center justify-between hover:scale-[1.02] transition-transform cursor-pointer ${payment.status === 'Paid' ? 'opacity-70' : ''}`;
+                
+                const initials = payment.name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+                
+                const statusBadge = payment.status === 'Paid' 
+                    ? `<div class="bg-white/10 border border-white/10 px-sm py-xs rounded text-white flex items-center gap-xs font-label-sm text-label-sm">
+                         <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Paid
+                       </div>`
+                    : `<div class="bg-white/10 border border-white/10 px-sm py-xs rounded text-on-surface font-label-sm text-label-sm">
+                         Pending
+                       </div>`;
+
+                itemDiv.innerHTML = `
+                    <div class="flex items-center gap-md">
+                        <div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center font-headline-sm text-headline-sm text-on-background border border-white/5">
+                            ${initials}
+                        </div>
+                        <div>
+                            <p class="font-label-md text-label-md text-on-background">${payment.name}</p>
+                            <p class="font-label-sm text-label-sm text-on-surface-variant">LKR ${formatLkr(activeInvoice.perMemberLkr)}</p>
+                        </div>
+                    </div>
+                    ${statusBadge}
+                `;
+                
+                // Toggle payment status on click
+                itemDiv.addEventListener('click', () => {
+                    const newStatus = payment.status === 'Paid' ? 'Pending' : 'Paid';
+                    AppStore.updateMemberPayment(activeInvoice.id, payment.name, newStatus);
+                    updateDashboard();
+                });
+
+                upcomingList.appendChild(itemDiv);
+            });
+
+            // Reminder WhatsApp Generator
+            const reminderBtn = document.getElementById('sendReminderBtn');
+            reminderBtn.onclick = () => {
+                const unpaid = activeInvoice.payments.filter(p => p.status === 'Pending').map(p => p.name);
+                if (unpaid.length === 0) {
+                    alert("Everyone has paid! No reminders needed.");
+                    return;
+                }
+                const formattedSplit = parseFloat(activeInvoice.perMemberLkr).toLocaleString('en-US', { maximumFractionDigits: 0 });
+                const msg = `🔔 *Netflix Payment Reminder* 🔔\n` +
+                            `Hi pool! Quick reminder to transfer your share of *LKR ${formattedSplit}* for *${activeInvoice.month} ${activeInvoice.year}*.\n` +
+                            `Pending from: ${unpaid.join(', ')}.\n` +
+                            `Bank: ${settings.bankNameBranch || 'HNB'} - ${settings.bankAccountNumber || '123456789'}\n` +
+                            `Thank you!`;
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+            };
+        }
+
+        updateDashboard();
+    });
+</script>
+</body></html>
